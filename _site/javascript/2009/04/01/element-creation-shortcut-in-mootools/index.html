@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Element Creation Shortcut in MooTools | Jekyll Bootstrap</title>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="Jekyll" />
+		<meta name="author" content="Name Lastname" />
+		<meta name="description" content="" />
+
+		<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="" />
+		
+		
+		
+		
+	</head>
+	<body>
+		<div id="header">
+			<h1>
+				<a href="/">Jekyll Bootstrap</a>
+			</h1>
+			
+			<div>
+				<span>/*</span>  <span>*/</span>
+			</div>
+			
+			<a href="" id="subscribe">Subscribe</a>
+			
+			<ul id="nav">
+	
+</ul>
+		</div>
+		
+		<div id="content">
+			<div id="alpha">
+				
+
+
+<div class="entry">
+	<h2>
+		
+			Element Creation Shortcut in MooTools
+		
+	</h2>
+	
+	<div class="entry-date">Apr <div>1</div> 2009</div>
+	
+	<div class="entry-contents">
+		
+			<p>Lately, I&#8217;ve been bothered about the amount of typing and lines required to create a simple element in MooTools.</p>
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">curly</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Element</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="p">{</span>
+  <span class="nx">id</span> <span class="o">:</span> <span class="s1">&#39;curly&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;class&#39;</span> <span class="o">:</span> <span class="s1">&#39;stooge&#39;</span>
+<span class="p">});</span>
+</code></pre></div><p>In jQuery, you&#8217;re given the convenience of writing <span class="caps">HTML</span> into the jQuery function &#8212;</p>
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">$curly</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div id=&quot;curly&quot; class=&quot;stooge&quot; /&gt;&#39;</span><span class="p">);</span>
+</code></pre></div><p>To me, this is quick and easy, but it&#8217;s very unnatural typing <span class="caps">HTML</span> into JavaScript and I&#8217;ve seen this convenience become quickly (and horrifyingly) abused.<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>  MooTools deserves something cleaner and cooler, so today I realized I could use a limited selector to create an element.  I liked that idea very much.</p>
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">curly</span> <span class="o">=</span> <span class="nx">$E</span><span class="p">(</span><span class="s1">&#39;div#curly.stooge&#39;</span><span class="p">);</span>
+</code></pre></div><p><ins>(<strong>update:</strong> Apparently I&#8217;m not the first to think of this.  A couple weeks before I wrote this post, <a href="http://github.com/kamicane/mootools-core/commit/c157e231c36d9935053b26dedd08eeb50560f82f">this commit</a> was made to MooTools 2.0 adding this capability to <code>new Element</code>. The idea came from <a href="http://subtlegradient.com/">Thomas Aylott</a>.  I am so happy to see this become a part of the next version of MooTools!)</ins></p>
+<p>I know, <code>$E</code> was used in MooTools 1.1 for finding an element by a selector with an optional filter, but that is longer the case in MooTools 1.2.  Besides, <code>$A</code> and <code>$H</code> are used for to <em>create</em> a new array or hash, respectively, so it seems only natural to me to use <code>$E</code> for creating an element.  If you don&#8217;t like my reasoning, then you can change the name and I promise I won&#8217;t hunt you down.</p>
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">$E</span><span class="p">(</span><span class="nx">tag</span><span class="p">,</span> <span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">props</span> <span class="o">==</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span>
+    <span class="nx">props</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">style</span> <span class="o">:</span> <span class="nx">props</span> <span class="p">};</span>
+  <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">tag</span> <span class="o">==</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">tag</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/#([\w-]+)/</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">classes</span> <span class="o">=</span> <span class="nx">tag</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/(?:\.[\w-]+)+/</span><span class="p">);</span>
+    <span class="nx">tag</span> <span class="o">=</span> <span class="nx">tag</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[#.].*/</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+    <span class="nx">props</span> <span class="o">=</span> <span class="nx">props</span> <span class="o">||</span> <span class="p">{};</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="nx">props</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">id</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">classes</span><span class="p">)</span> <span class="nx">props</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">classes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\./g</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nx">Element</span><span class="p">(</span><span class="nx">tag</span> <span class="o">||</span> <span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="nx">props</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div><p><ins>(<strong>edit:</strong> a style string can now optionally be passed into props, further updates will be on GitHub <a href="http://gist.github.com/91433">here</a>)</ins></p>
+<p>With this new magical utility function, you can quickly and easily create elements with an optional id and any number of classes, along with additional properties passed into the optional second argument.  In fact, you can omit a tag and it&#8217;ll default to a <code>&lt;div&gt;</code>.</p>
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">moe</span> <span class="o">=</span> <span class="nx">$E</span><span class="p">(</span><span class="s1">&#39;#moe.stooge.leader&#39;</span><span class="p">,</span> <span class="p">{...});</span>
+</code></pre></div><p>I&#8217;m pretty excited about using this new shortcut, and I hope you are too.  Please shout out in the comments if you find it useful or have any tweaks.</p>
+<p><strong>Note to plugin developers:</strong> If you decide to use this, please place it inside of a closure so it doesn&#8217;t override someone else&#8217;s <code>$E</code> function.  I saw this suggestion on the <a href="twitter">MooTools Twitter</a><sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> so I can imagine this becoming a problem &#8212;</p>
+<div class="highlight"><pre><code class="javascript"><span class="nx">$E</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElement</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nb">document</span><span class="p">);</span>
+</code></pre></div><p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Some even prefer to use double quotes and then escape all the attribute quotes.  Ughh!</p>
+<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> My <a href="http://appden.com/javascript/fun-with-custom-events-on-elements-in-mootools">last post</a> on custom events was linked there!</p>
+
+
+
+
+		
+	</div>
+	
+	<div class="entry-footer">
+		<a class="entry-comments" href="/javascript/2009/04/01/element-creation-shortcut-in-mootools#disqus_thread">0</a>
+		<p>
+			Posted by Name Lastname on Wednesday, April 1, 2009
+		</p>
+		<p>
+			Filed in
+			Javascript
+			
+		</p>
+	</div>
+</div>
+
+
+<div id="pagination">
+	
+		<a class="prev" href="/javascript/2009/03/29/fun-with-custom-events-on-elements-in-mootools">&laquo; Fun with Custom Events on...</a>
+	
+	
+	
+		<a class="next" href="/javascript/2009/04/08/safari-04-beta-breaks-classimplement">Safari 4 Beta Breaks <code>Class.implement()</code>... &raquo;</a>
+	
+</div>
+
+<div id="comments">
+	<div id="disqus_thread"></div>
+
+	<script type="text/javascript">
+		var disqus_developer = (/localhost|github|dev/i).test(location.host);
+	</script>
+
+	<script type="text/javascript" src="http://disqus.com/forums//embed.js"></script>
+
+	<noscript>
+		<a href="http://.disqus.com/?url=ref">View the discussion thread.</a>
+	</noscript>
+</div>
+
+
+
+			</div>
+			
+			<div id="beta">
+				
+					
+
+
+
+	<div class="widget">
+		<h3>Recent Entries</h3>
+		<ul>
+			
+				<li><a href="/javascript/2009/12/09/puncture-closures">Puncture Closures to Create Wormholes</a></li>
+			
+				<li><a href="/javascript/2009/09/19/get-tweets-with-mootools">Get Tweets with MooTools</a></li>
+			
+				<li><a href="/personal/2009/09/06/journey-to-jekyll">Journey to Jekyll</a></li>
+			
+				<li><a href="/tech/2009/06/21/iphone-predictions">Predictions for the Next iPhone</a></li>
+			
+				<li><a href="/javascript/2009/05/04/protect-your-class-methods-from-evildoers">Protect Your Class Methods from Evildoers</a></li>
+			
+		</ul>
+	</div>
+
+
+
+	<div class="widget">
+		<h3><a href="http://twitter.com/username">Latest Tweets</a></h3>
+		<div id="tweets"></div>
+	</div>
+
+
+
+
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+		
+		<div id="footer">
+			<div id="about">
+				
+			</div>
+			<div id="copyright">
+				
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		<script type="text/javascript">
+			(function(){
+				var links = document.getElementsByTagName('a');
+				var query = '?';
+				for (var i = 0; i < links.length; i++){
+					if (links[i].href.indexOf('#disqus_thread') >= 0){
+						query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+					}
+				}
+				document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums//get_num_replies.js' + query + '"></' + 'script>');
+			})();
+		</script>
+	</body>
+</html>

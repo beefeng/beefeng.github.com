@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Lazy List Comprehensions in JavaScript, a Lazy Evaluation | Jekyll Bootstrap</title>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="Jekyll" />
+		<meta name="author" content="Name Lastname" />
+		<meta name="description" content="" />
+
+		<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="" />
+		
+		
+		
+		
+	</head>
+	<body>
+		<div id="header">
+			<h1>
+				<a href="/">Jekyll Bootstrap</a>
+			</h1>
+			
+			<div>
+				<span>/*</span>  <span>*/</span>
+			</div>
+			
+			<a href="" id="subscribe">Subscribe</a>
+			
+			<ul id="nav">
+	
+</ul>
+		</div>
+		
+		<div id="content">
+			<div id="alpha">
+				
+
+
+<div class="entry">
+	<h2>
+		
+			Lazy List Comprehensions in JavaScript, a Lazy Evaluation
+		
+	</h2>
+	
+	<div class="entry-date">Mar <div>25</div> 2009</div>
+	
+	<div class="entry-contents">
+		
+			<p>A while back I made <a href="http://www.reddit.com/r/programming">Proggit</a> a regular stop on my daily Internet stroll.  I was struck by the readers&#8217; apparent bias toward Haskell and thought, <em>What the Hell, I should at least attempt to learn something new today</em>.  It was <a href="http://www.haskell.org/~pairwise/intro/section1.html#part5">here</a> that I had that lazy evaluation Eureka moment.  So of course, I then thought to myself, <em>How can I get a piece of that sweet functional programming action in JavaScript?</em></p>
+<p>For the uninitiated, lazy evaluation is, in a nutshell, the concept of a program not computing the value of something until absolutely needed.  This is especially useful for long (perhaps even infinite) lists that would cause severe nausea or swelling to compute ahead of time.  The example I read about used the <a href="http://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci sequence</a> to butter up my brain, so that is what I will use here to electrify yours.</p>
+<p>Quite simply, I wanted the constructor of my <em>Lazy List</em> to take a definition function, such as the following for the Fibonacci sequence:</p>
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">fibs</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">?</span> <span class="nx">i</span> <span class="o">:</span> <span class="nx">fibs</span><span class="p">(</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nx">fibs</span><span class="p">(</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><p>But why would anyone need anything beyond the <code>fibs</code> function written above? If the unlikely programmer who needs the tenth member of the Fib sequence, just ran <code>fibs(10)</code>, she would happily get 55 as the answer.  Ahh, but she may want the eleventh member shortly thereafter&#8230;</p>
+<p>Yes, indeed, she needs a simple caching mechanism.  This is a recursive definition we&#8217;re talking about here, not exactly cheap labor.  So here is my first attempt at giving that poor unlikely programmer just what she needs:</p>
+<div class="highlight"><pre><code class="javascript"><span class="c1">// my lazy constructor</span>
+<span class="kd">function</span> <span class="nx">Lazy</span><span class="p">(</span><span class="nx">def</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">cache</span> <span class="o">=</span> <span class="p">[];</span>
+
+  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nx">i</span> <span class="k">in</span> <span class="nx">cache</span><span class="p">)</span> <span class="o">?</span> <span class="nx">cache</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">:</span>
+      <span class="p">(</span><span class="nx">cache</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">def</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">callee</span><span class="p">,</span> <span class="nx">i</span><span class="p">));</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// a more awesome Fibonacci sequence</span>
+<span class="kd">var</span> <span class="nx">fibs</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Lazy</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">?</span> <span class="nx">i</span> <span class="o">:</span> <span class="k">this</span><span class="p">(</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="k">this</span><span class="p">(</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div><p>There, now she must be happy.  When she wants that eleventh number in the sequence, the ninth and tenth will already be cached and ready to be added together to give 89 as the result.  One little goodie I snuck in there was binding the definition function to the generator so we can conveniently call it with the keyword, <code>this</code>.  Also, using the <code>new</code> operator is optional, though I find it more canonical to use since we are creating a <em>new</em> generator when calling the constructor.</p>
+<p>When pushing the limits of our cool new sequence, our happy but unlikely programmer will eventually hit a brick wall of &#8220;too much recursion&#8221;, though how soon that occurs very much depends on the browser she is using.  Hopefully, when fed up with our simple solution, she&#8217;ll fire up Firefox 3 to enjoy its native <a href="firefox.[1">generator expressions in JavaScript 1.8</a>]</p>
+<p>Array-like methods, such as <code>slice</code> and <code>forEach</code>, can be added to our generator, but that will be left as an exercise for the reader (unless you pay me).</p>
+<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> For more of the bleeding edge, read <a href="http://ejohn.org/blog/javascript-18-progress/">John Resig&#8217;s rundown of JavaScript 1.8</a> and <a href="http://developer.mozilla.org/en/New_in_JavaScript_1.7">Mozilla&#8217;s coverage of JavaScript 1.7</a></p>
+
+
+
+
+
+		
+	</div>
+	
+	<div class="entry-footer">
+		<a class="entry-comments" href="/javascript/2009/03/25/lazy-list-comprehensions-in-javascript-a-lazy-evalution#disqus_thread">0</a>
+		<p>
+			Posted by Name Lastname on Wednesday, March 25, 2009
+		</p>
+		<p>
+			Filed in
+			Javascript
+			
+		</p>
+	</div>
+</div>
+
+
+<div id="pagination">
+	
+		<a class="prev" href="/personal/2009/03/22/what-the-frak">&laquo; What the Frak?</a>
+	
+	
+	
+		<a class="next" href="/javascript/2009/03/29/fun-with-custom-events-on-elements-in-mootools">Fun with Custom Events on... &raquo;</a>
+	
+</div>
+
+<div id="comments">
+	<div id="disqus_thread"></div>
+
+	<script type="text/javascript">
+		var disqus_developer = (/localhost|github|dev/i).test(location.host);
+	</script>
+
+	<script type="text/javascript" src="http://disqus.com/forums//embed.js"></script>
+
+	<noscript>
+		<a href="http://.disqus.com/?url=ref">View the discussion thread.</a>
+	</noscript>
+</div>
+
+
+
+			</div>
+			
+			<div id="beta">
+				
+					
+
+
+
+	<div class="widget">
+		<h3>Recent Entries</h3>
+		<ul>
+			
+				<li><a href="/javascript/2009/12/09/puncture-closures">Puncture Closures to Create Wormholes</a></li>
+			
+				<li><a href="/javascript/2009/09/19/get-tweets-with-mootools">Get Tweets with MooTools</a></li>
+			
+				<li><a href="/personal/2009/09/06/journey-to-jekyll">Journey to Jekyll</a></li>
+			
+				<li><a href="/tech/2009/06/21/iphone-predictions">Predictions for the Next iPhone</a></li>
+			
+				<li><a href="/javascript/2009/05/04/protect-your-class-methods-from-evildoers">Protect Your Class Methods from Evildoers</a></li>
+			
+		</ul>
+	</div>
+
+
+
+	<div class="widget">
+		<h3><a href="http://twitter.com/username">Latest Tweets</a></h3>
+		<div id="tweets"></div>
+	</div>
+
+
+
+
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+		
+		<div id="footer">
+			<div id="about">
+				
+			</div>
+			<div id="copyright">
+				
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		<script type="text/javascript">
+			(function(){
+				var links = document.getElementsByTagName('a');
+				var query = '?';
+				for (var i = 0; i < links.length; i++){
+					if (links[i].href.indexOf('#disqus_thread') >= 0){
+						query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+					}
+				}
+				document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums//get_num_replies.js' + query + '"></' + 'script>');
+			})();
+		</script>
+	</body>
+</html>

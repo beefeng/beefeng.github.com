@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Protect Your Class Methods from Evildoers | Jekyll Bootstrap</title>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="Jekyll" />
+		<meta name="author" content="Name Lastname" />
+		<meta name="description" content="" />
+
+		<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="" />
+		
+		
+		
+		
+	</head>
+	<body>
+		<div id="header">
+			<h1>
+				<a href="/">Jekyll Bootstrap</a>
+			</h1>
+			
+			<div>
+				<span>/*</span>  <span>*/</span>
+			</div>
+			
+			<a href="" id="subscribe">Subscribe</a>
+			
+			<ul id="nav">
+	
+</ul>
+		</div>
+		
+		<div id="content">
+			<div id="alpha">
+				
+
+
+<div class="entry">
+	<h2>
+		
+			Protect Your Class Methods from Evildoers
+		
+	</h2>
+	
+	<div class="entry-date">May <div>4</div> 2009</div>
+	
+	<div class="entry-contents">
+		
+			<p>With the advent of MooTools 1.2.2 comes the ability to mark Class methods as <del>private</del> <ins>protected</ins>.  Let&#8217;s take a look at some code.</p>
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">Person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Class</span><span class="p">({</span>
+
+  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="p">},</span>
+
+  <span class="nx">secret</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="s1">&#39;I sometimes like girly drinks&#39;</span><span class="p">;</span>
+  <span class="p">}.</span><span class="nx">protect</span><span class="p">(),</span>  <span class="c1">// &lt;== MAGIC SAUCE</span>
+
+  <span class="nx">describe</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="s2">&quot;Hi, I&#39;m {name}. {secret}. I kid, I kid.&quot;</span><span class="p">.</span><span class="nx">substitute</span><span class="p">({</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span>
+      <span class="nx">secret</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">secret</span><span class="p">()</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">scott</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">&#39;Scott&#39;</span><span class="p">);</span>
+</code></pre></div><p>Notice the <code>protect</code> call on the <code>secret</code> method.  It prevents outsiders from calling that method and believing false facts about that person.</p>
+<p><code>scott.secret();</code><br />
+<span style="color:#f00;"><em>The method &#8220;secret&#8221; cannot be called.</em></span></p>
+<p>It can, however, be called from within an another method.</p>
+<p><code>scott.describe();</code><br />
+<em>Hi, I&#8217;m Scott. I sometimes like girly drinks. I kid, I kid.</em></p>
+<p>There you have it &#8212; a cool, new, undocumented feature available now in MooTools 1.2.2!</p>
+<p>As I mentioned in my previous article, I have a working implementation of a Privates mutator (to privatize variables) for the latest version of MooTools, but I am waiting to see how post-initialization mutators will look in More.  It&#8217;s something I&#8217;ve discussed at length with <a href="http://clientcide.com">Aaron Newton</a>, and hopefully will be available soon.</p>
+		
+	</div>
+	
+	<div class="entry-footer">
+		<a class="entry-comments" href="/javascript/2009/05/04/protect-your-class-methods-from-evildoers#disqus_thread">0</a>
+		<p>
+			Posted by Name Lastname on Monday, May 4, 2009
+		</p>
+		<p>
+			Filed in
+			Javascript
+			
+		</p>
+	</div>
+</div>
+
+
+<div id="pagination">
+	
+		<a class="prev" href="/javascript/2009/04/14/bindall-class-mutator-for-saving-your-sanity">&laquo; BindAll Class Mutator for Saving...</a>
+	
+	
+	
+		<a class="next" href="/tech/2009/06/21/iphone-predictions">Predictions for the Next iPhone... &raquo;</a>
+	
+</div>
+
+<div id="comments">
+	<div id="disqus_thread"></div>
+
+	<script type="text/javascript">
+		var disqus_developer = (/localhost|github|dev/i).test(location.host);
+	</script>
+
+	<script type="text/javascript" src="http://disqus.com/forums//embed.js"></script>
+
+	<noscript>
+		<a href="http://.disqus.com/?url=ref">View the discussion thread.</a>
+	</noscript>
+</div>
+
+
+
+			</div>
+			
+			<div id="beta">
+				
+					
+
+
+
+	<div class="widget">
+		<h3>Recent Entries</h3>
+		<ul>
+			
+				<li><a href="/javascript/2009/12/09/puncture-closures">Puncture Closures to Create Wormholes</a></li>
+			
+				<li><a href="/javascript/2009/09/19/get-tweets-with-mootools">Get Tweets with MooTools</a></li>
+			
+				<li><a href="/personal/2009/09/06/journey-to-jekyll">Journey to Jekyll</a></li>
+			
+				<li><a href="/tech/2009/06/21/iphone-predictions">Predictions for the Next iPhone</a></li>
+			
+				<li><a href="/javascript/2009/05/04/protect-your-class-methods-from-evildoers">Protect Your Class Methods from Evildoers</a></li>
+			
+		</ul>
+	</div>
+
+
+
+	<div class="widget">
+		<h3><a href="http://twitter.com/username">Latest Tweets</a></h3>
+		<div id="tweets"></div>
+	</div>
+
+
+
+
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+		
+		<div id="footer">
+			<div id="about">
+				
+			</div>
+			<div id="copyright">
+				
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		<script type="text/javascript">
+			(function(){
+				var links = document.getElementsByTagName('a');
+				var query = '?';
+				for (var i = 0; i < links.length; i++){
+					if (links[i].href.indexOf('#disqus_thread') >= 0){
+						query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+					}
+				}
+				document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums//get_num_replies.js' + query + '"></' + 'script>');
+			})();
+		</script>
+	</body>
+</html>
