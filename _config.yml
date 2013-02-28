@@ -6,16 +6,16 @@ exclude:
     - README.md
     - Rakefile
 
-title:          AppDen
-url:            http://appden.com
+title:          Beefeng
+url:            http://beefeng.com
 feed:           /atom.xml
 description:    "Advanced JavaScript techniques, tips on avoiding those nasty CSS bugs, and musings on technological progress."
 comment:        Isn't it ironic there are no apps?
 
 author:
-    name:       Scott Kyle
-    email:      scott@appden.com
-    twitter:    appden
+    name:       beefeng
+    email:      qf8.liu@gmail.com
+    weibo:      简单_梦想
     
 about: >
     I'm Scott Kyle, a <a href="http://mootools.net">MooTools</a> developer
