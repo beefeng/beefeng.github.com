@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+	<title>Beefeng</title>
+	<subtitle></subtitle>
+	<link href="" rel="self" type="application/atom+xml" />
+	<link href="" rel="alternate" type="text/html" />
+	<id></id>
+	<updated>2013-04-01T10:40:34+08:00</updated>
+	<author>
+		<name>Beefeng</name>
+	</author>
+
+	
+		<entry>
+			<title>Road and Curb</title>
+			<link href="/miscellaneous/2011/07/09/road" rel="alternate" type="text/html" />
+			<updated>2011-07-09T00:00:00+08:00</updated>
+			<id>/miscellaneous/2011/07/09/road</id>
+			<content type="html">&lt;p&gt;Bike lanes here are terribly thin.&lt;/p&gt;</content>
+		</entry>
+	
+		<entry>
+			<title>Stone Bridge</title>
+			<link href="/miscellaneous/2011/06/05/bridge" rel="alternate" type="text/html" />
+			<updated>2011-06-05T00:00:00+08:00</updated>
+			<id>/miscellaneous/2011/06/05/bridge</id>
+			<content type="html">&lt;p&gt;An old stone bridge in London.&lt;/p&gt;</content>
+		</entry>
+	
+		<entry>
+			<title>Wing and a Prayer</title>
+			<link href="/haha/2010/10/01/wing" rel="alternate" type="text/html" />
+			<updated>2010-10-01T00:00:00+08:00</updated>
+			<id>/haha/2010/10/01/wing</id>
+			<content type="html">&lt;p&gt;The wing of the AirBus I rode to England.&lt;/p&gt;</content>
+		</entry>
+	
+		<entry>
+			<title>Bikes, Black and White</title>
+			<link href="/miscellaneous/2010/03/04/bikes" rel="alternate" type="text/html" />
+			<updated>2010-03-04T00:00:00+08:00</updated>
+			<id>/miscellaneous/2010/03/04/bikes</id>
+			<content type="html">&lt;p&gt;Bikes are used by almost everyone in downtown Amsterdam. These ones are chained to a bike rack.&lt;/p&gt;</content>
+		</entry>
+	
+ 
+</feed>
