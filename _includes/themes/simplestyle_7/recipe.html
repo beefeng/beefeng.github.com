@@ -1,0 +1,27 @@
+{% comment %}
+<!--
+Define OL base path parametrized with numberr version at _config.yml
+-->
+{% endcomment %}
+{% capture OL_PATH %}{{ BASE_PATH }}/assets/js/OpenLayers-{{ site.OLE.OLVersion }}{% endcapture %}
+
+<!-- specific CSS/JS code for recipes -->
+<link rel="stylesheet" href="{{ OL_PATH }}/theme/default/style.css" type="text/css">
+
+<link rel="stylesheet" href="{{ BASE_PATH }}/assets/css/github-syntax.css" type="text/css">
+
+<style type="text/css">
+	.smallmap {
+	    width: 512px;
+	    height: 256px;
+	    border: 1px solid #ccc;
+	}
+	/* to fix a bootstrap css style for images*/
+	.smallmap img{
+		max-width: 10000px;
+	}
+</style>
+
+<script src="{{ OL_PATH}}/OpenLayers.js"></script>
+
+{% include themes/simplestyle_7/post.html %}

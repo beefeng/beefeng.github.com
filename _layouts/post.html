@@ -1,31 +1,5 @@
 ---
 layout: default
 ---
-
-{% assign post = page %}
-{% assign detail = true %}
-
-<div class="con">
-	<div class="tit clearfix">
-    <span class='note_icon' title='{{ post.title }}'></span>
-    <a href="{{ post.url }}">{{ post.title }}</a>
-  </div>
-  <div class="text">
-		<div class="infor_tag">    
-			<a class="tag" rel="tag" href="/tag/management"><span>management</span></a>
-		</div>
-    {{ post.content }}
-  </div>
-  
-  <div class="info clearfix">
-    <div class="fr">
-			<span class="author">robbin</span>
-      <span class="time">2012-04-17</span>
-      <span class="edit">2013-02-20</span>
-      <span class="views" title="">1832</span>
-      <a class="comment" title="" href="/blog/22/my-favorite-ceo#comments">0</a>
-    </div>
-  </div>
-</div>
-
-
+{% include JB/setup %}
+{% include themes/mytwitter/post.html %}
