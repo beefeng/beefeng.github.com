@@ -1,1 +1,0 @@
-blog power by hexo!
